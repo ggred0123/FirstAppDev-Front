@@ -59,45 +59,57 @@ class ContactFragment : Fragment() {
     }
 
     private fun showUserDetail(user: User) {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("User Detail")
+            .setMessage("""
+            Name: ${user.userName}
+            Email: ${user.email}
+            Birthday: ${user.birthday}
+            Phone: ${user.phoneNumber}
+            Instagram: ${user.instagramId}
+            Created: ${user.createdAt}
+        """.trimIndent())
+            .setPositiveButton("Edit") { dialog, _ ->
+                showEditDialog(user)
+            }
+            .setNegativeButton("Close", null)
+            .create()
+        dialog.show()
+    }
+
+    private fun showEditDialog(user: User) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_contact, null)
 
-        // Fill current data
+        // 현재 데이터 채우기
         dialogView.findViewById<EditText>(R.id.edtName).setText(user.userName)
         dialogView.findViewById<EditText>(R.id.edtEmail).setText(user.email)
         dialogView.findViewById<EditText>(R.id.edtBirthday).setText(user.birthday)
         dialogView.findViewById<EditText>(R.id.edtPhone).setText(user.phoneNumber)
         dialogView.findViewById<EditText>(R.id.edtInstagram).setText(user.instagramId)
 
-        val dialog = Dialog(requireContext())
-        dialog.setContentView(dialogView)
-
-        // Set up button click listeners
-        dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialogView.findViewById<Button>(R.id.btnSave).setOnClickListener {
-            val updatedUser = UserUpdate(
-                userName = dialogView.findViewById<EditText>(R.id.edtName).text.toString(),
-                email = dialogView.findViewById<EditText>(R.id.edtEmail).text.toString(),
-                birthday = dialogView.findViewById<EditText>(R.id.edtBirthday).text.toString(),
-                phoneNumber = dialogView.findViewById<EditText>(R.id.edtPhone).text.toString(),
-                instagramId = dialogView.findViewById<EditText>(R.id.edtInstagram).text.toString()
-            )
-
-            updateUser(user.id, updatedUser, dialog)
-        }
-
-        dialog.show()
+        AlertDialog.Builder(requireContext())
+            .setTitle("Edit Contact")
+            .setView(dialogView)
+            .setPositiveButton("Save") { dialog, _ ->
+                val updatedUser = UserUpdate(
+                    userName = dialogView.findViewById<EditText>(R.id.edtName).text.toString(),
+                    email = dialogView.findViewById<EditText>(R.id.edtEmail).text.toString(),
+                    birthday = dialogView.findViewById<EditText>(R.id.edtBirthday).text.toString(),
+                    phoneNumber = dialogView.findViewById<EditText>(R.id.edtPhone).text.toString(),
+                    instagramId = dialogView.findViewById<EditText>(R.id.edtInstagram).text.toString()
+                )
+                updateUser(user.id, updatedUser)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
-    private fun updateUser(userId: Int, userUpdate: UserUpdate, dialog: Dialog) {
+    private fun updateUser(userId: Int, userUpdate: UserUpdate) {
         lifecycleScope.launch {
             try {
                 val updatedUser = RetrofitInstance.api.updateUser(userId, userUpdate)
                 Toast.makeText(context, "Contact updated successfully", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-                fetchUsers() // Refresh the list
+                fetchUsers() // 목록 새로고침
             } catch (e: Exception) {
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                 Log.e("ContactFragment", "Error updating user", e)

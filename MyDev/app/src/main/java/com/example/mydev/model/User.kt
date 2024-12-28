@@ -31,3 +31,19 @@ data class UserUpdate(
     val phoneNumber: String? = null,
     val instagramId: String? = null
 )
+
+data class ImageUploadRequest(
+    val imageBase64: String, // Base64로 인코딩된 이미지 데이터
+    val filename: String       // Base64로 인코딩된 이미지 데이터
+)
+data class ImageResponse(
+    val images: List<String> // 서버가 반환하는 JSON 구조에 따라 수정
+)
+
+data class UploadResponse(
+    val success: Boolean,
+    val message: String // 서버가 반환하는 JSON 필드에 따라 수정
+)
+
+
+

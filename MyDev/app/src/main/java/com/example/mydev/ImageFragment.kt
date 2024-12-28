@@ -9,16 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.mydev.adapter.ImageAdapter
+import com.example.mydev.api.RetrofitInstance
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.launch
+import kotlin.collections.emptyList
 
 class ImagesFragment : Fragment() {
 
     private lateinit var fabAddImage: FloatingActionButton
     private lateinit var gridView: GridView
-    private val selectedImages = mutableListOf<Uri>() // 선택된 이미지 URI 리스트
+    private val imageUrls = mutableListOf<String>() // 클라우드에서 가져온 이미지 URL 리스트
     private lateinit var imageAdapter: ImageAdapter
 
     override fun onCreateView(
@@ -31,39 +36,37 @@ class ImagesFragment : Fragment() {
         fabAddImage = view.findViewById(R.id.fabAddImage)
         gridView = view.findViewById(R.id.gridViewImages)
 
-        imageAdapter = ImageAdapter(requireContext(), selectedImages)
+        // 어댑터 초기화
+        imageAdapter = ImageAdapter(requireContext(), imageUrls)
         gridView.adapter = imageAdapter
 
         // FloatingActionButton 클릭 리스너
         fabAddImage.setOnClickListener {
-            openGallery()
+            fetchImages()
         }
 
         return view
     }
 
-    private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "image/*" // 이미지 파일만 표시
-        startActivityForResult(intent, GALLERY_REQUEST_CODE)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == GALLERY_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
-
-            val selectedImageUri = data?.data
-            if (selectedImageUri != null) {
-                selectedImages.add(selectedImageUri)
-                imageAdapter.notifyDataSetChanged()
+    // 클라우드에서 이미지 가져오기
+    private fun fetchImages() {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitInstance.cloudApi.getImages()
+                if (response.isSuccessful) {
+                    val images = response.body()?.images
+                    // images 리스트를 어댑터에 전달하여 UI 업데이트
+                    imageAdapter.updateImages(images.map {
+                    })
+                } else {
+                    Toast.makeText(context, "Failed to fetch images", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    companion object {
-        private const val GALLERY_REQUEST_CODE = 1001 // 갤러리 요청 코드
-    }
 }
 
 

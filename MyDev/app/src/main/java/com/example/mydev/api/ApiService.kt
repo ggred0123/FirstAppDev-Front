@@ -22,4 +22,8 @@ interface ApiService {
         @Path("id") userId: Int,
         @Body userUpdate: UserUpdate
     ): User
+
+    @GET("users/{userName}")
+    suspend fun searchUsers(@Path("userName") userName: String): UserResponse
+
 }

@@ -24,6 +24,68 @@ import kotlinx.coroutines.launch
 class ContactFragment : Fragment() {
     private lateinit var binding: FragmentContactBinding
     private lateinit var adapter: ContactAdapter
+    private var allUsers: List<User> = listOf()  // Store all users
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupListView()
+        setupSearchView()
+        fetchUsers()
+
+        binding.fabAddContact.setOnClickListener {
+            showAddContactDialog()
+        }
+    }
+
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchUsers(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchUsers(newText)
+                return true
+            }
+        })
+    }
+
+    private fun searchUsers(query: String?) {
+        lifecycleScope.launch {
+            try {
+                if (query.isNullOrBlank()) {
+                    // If query is empty, show all users
+                    adapter.updateUsers(allUsers)
+                } else {
+                    // Search in API
+                    val response = RetrofitInstance.api.searchUsers(query)
+                    val searchResults = response.users.map { user ->
+                        user.copy(profileImageRes = R.drawable.ic_add)
+                    }
+                    adapter.updateUsers(searchResults)
+                }
+            } catch (e: Exception) {
+                Toast.makeText(context, "Search error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e("ContactFragment", "Error searching users", e)
+            }
+        }
+    }
+
+    private fun fetchUsers() {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitInstance.api.getUsers()
+                allUsers = response.users.map { user ->
+                    user.copy(profileImageRes = R.drawable.ic_add)
+                }
+                adapter.updateUsers(allUsers)
+            } catch (e: Exception) {
+                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e("ContactFragment", "Error fetching users", e)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,21 +108,7 @@ class ContactFragment : Fragment() {
         }
     }
 
-    private fun fetchUsers() {
-        lifecycleScope.launch {
-            try {
-                val response = RetrofitInstance.api.getUsers()
-                val updatedUsers = response.users.map { user ->
-                    user.copy(profileImageRes = R.drawable.ic_add)
-                }
-                adapter.updateUsers(updatedUsers)
-            } catch (e: Exception) {
-                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-                Log.e("ContactFragment", "Error fetching users", e)
 
-            }
-        }
-    }
 
 
     private fun showUserDetail(user: User) {
@@ -121,15 +169,7 @@ class ContactFragment : Fragment() {
             }
         }
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupListView()
-        fetchUsers()
 
-        binding.fabAddContact.setOnClickListener {
-            showAddContactDialog()
-        }
-    }
 
     private fun showAddContactDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_contact, null)

@@ -31,3 +31,18 @@ data class UserUpdate(
     val phoneNumber: String? = null,
     val instagramId: String? = null
 )
+
+data class ImageResponse(
+    val images: List<String> // 클라우드에서 반환하는 이미지 URL 리스트
+)
+
+data class ImageUploadRequest(
+    val file: String,
+    val instagramId: String,
+    val createdAt: String
+)
+
+data class UploadResponse(
+    val success: Boolean,
+    val message: String
+)

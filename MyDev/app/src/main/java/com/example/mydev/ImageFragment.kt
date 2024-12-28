@@ -1,14 +1,13 @@
 package com.example.mydev
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.GridView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,11 +15,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.mydev.adapter.ImageAdapter
 import com.example.mydev.api.RetrofitInstance
-import com.example.mydev.model.ImageUploadRequest
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
-import android.app.DatePickerDialog
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import java.util.Calendar
+import okhttp3.MediaType.parse
+
 
 class ImagesFragment : Fragment() {
 
@@ -50,6 +53,7 @@ class ImagesFragment : Fragment() {
 
         return view
     }
+
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -58,10 +62,12 @@ class ImagesFragment : Fragment() {
 
         DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
             // ISO 8601 형식으로 날짜 포맷팅
-            selectedDate = String.format("%04d-%02d-%02dT00:00:00.000Z",
+            selectedDate = String.format(
+                "%04d-%02d-%02dT00:00:00.000Z",
                 selectedYear,
                 selectedMonth + 1,
-                selectedDay)
+                selectedDay
+            )
             openGallery() // 날짜 선택 후 갤러리 열기
         }, year, month, day).show()
     }
@@ -99,22 +105,33 @@ class ImagesFragment : Fragment() {
         }
     }
 
-    private fun uploadImageToCloud(imageUri: Uri, userInputDate: String) {  // 파라미터 수정
+    private fun uploadImageToCloud(imageUri: Uri, userInputDate: String) {
         val inputStream = requireContext().contentResolver.openInputStream(imageUri)
-        val imageBytes = inputStream?.readBytes()
-        val base64Image = Base64.encodeToString(imageBytes, Base64.DEFAULT)
+        val file = inputStream?.let {
+            // 임시 파일 생성
+            val tempFile = File.createTempFile("image", ".jpg", requireContext().cacheDir)
+            tempFile.outputStream().use { fileOut ->
+                it.copyTo(fileOut)
+            }
+            tempFile
+        } ?: run {
+            Toast.makeText(context, "Failed to read image", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        val uploadRequest = ImageUploadRequest(
-            url = base64Image,
-            instagramIds = listOf(),    // 빈 리스트 추가
-            createdAt = userInputDate   // 날짜 추가
-        )
+        // MultipartBody.Part로 파일 변환
+        val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
+        val filePart = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+        // 다른 데이터들도 RequestBody로 변환
+        val createdAtBody = RequestBody.create(MediaType.parse("text/plain"), userInputDate)
 
         lifecycleScope.launch {
             try {
-                val response = RetrofitInstance.cloudApi.uploadImage(uploadRequest)
+                val response = RetrofitInstance.cloudApi.uploadImage(filePart, createdAtBody)
                 if (response.isSuccessful && response.body()?.success == true) {
-                    Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT)
+                        .show()
                     fetchImages()
                 } else {
                     Toast.makeText(context, "Failed to upload image", Toast.LENGTH_SHORT).show()
@@ -124,6 +141,8 @@ class ImagesFragment : Fragment() {
             }
         }
     }
+
+
 
     companion object {
         private const val GALLERY_REQUEST_CODE = 1001

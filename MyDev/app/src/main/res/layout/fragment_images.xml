@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
+    <GridView
+        android:id="@+id/gridViewImages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:horizontalSpacing="0dp"
+        android:verticalSpacing="0dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Images Tab"
-        android:textSize="18sp" />
-</LinearLayout>
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_input_add"
+        app:fabSize="normal" />
+</FrameLayout>

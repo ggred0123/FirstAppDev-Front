@@ -52,6 +52,10 @@ dependencies {
     implementation ("com.google.android.material:material:1.9.0")
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.compose.material3:material3-android:1.3.1")
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+
+    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,8 +1,11 @@
 package com.example.mydev.model
 
+import com.example.mydev.R
+
 data class User(
     val id: Int,
     val userName: String,
+    val profileImageRes: Int = R.drawable.ic_person,
     val email: String,
     val birthday: String,
     val phoneNumber: String,

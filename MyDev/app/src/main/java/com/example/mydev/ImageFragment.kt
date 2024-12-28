@@ -19,6 +19,8 @@ import com.example.mydev.api.RetrofitInstance
 import com.example.mydev.model.ImageUploadRequest
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
+import android.app.DatePickerDialog
+import java.util.Calendar
 
 class ImagesFragment : Fragment() {
 
@@ -26,6 +28,7 @@ class ImagesFragment : Fragment() {
     private lateinit var gridView: GridView
     private val imageUrls = mutableListOf<String>() // 클라우드에서 가져온 이미지 URL 리스트
     private lateinit var imageAdapter: ImageAdapter
+    private var selectedDate: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,12 +43,27 @@ class ImagesFragment : Fragment() {
         gridView.adapter = imageAdapter
 
         fabAddImage.setOnClickListener {
-            openGallery()
+            showDatePicker()
         }
 
         fetchImages() // 클라우드에서 이미지 가져오기
 
         return view
+    }
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+            // ISO 8601 형식으로 날짜 포맷팅
+            selectedDate = String.format("%04d-%02d-%02dT00:00:00.000Z",
+                selectedYear,
+                selectedMonth + 1,
+                selectedDay)
+            openGallery() // 날짜 선택 후 갤러리 열기
+        }, year, month, day).show()
     }
 
     private fun openGallery() {
@@ -60,7 +78,7 @@ class ImagesFragment : Fragment() {
         if (requestCode == GALLERY_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
             val selectedImageUri = data?.data
             if (selectedImageUri != null) {
-                uploadImageToCloud(selectedImageUri)
+                uploadImageToCloud(selectedImageUri, selectedDate)  // selectedDate 추가
             }
         }
     }
@@ -81,15 +99,15 @@ class ImagesFragment : Fragment() {
         }
     }
 
-    private fun uploadImageToCloud(imageUri: Uri) {
+    private fun uploadImageToCloud(imageUri: Uri, userInputDate: String) {  // 파라미터 수정
         val inputStream = requireContext().contentResolver.openInputStream(imageUri)
         val imageBytes = inputStream?.readBytes()
         val base64Image = Base64.encodeToString(imageBytes, Base64.DEFAULT)
 
         val uploadRequest = ImageUploadRequest(
-            file = "uploaded_image.jpg",
-            instagramId = "",
-            createdAt = base64Image
+            url = base64Image,
+            instagramIds = listOf(),    // 빈 리스트 추가
+            createdAt = userInputDate   // 날짜 추가
         )
 
         lifecycleScope.launch {
@@ -97,7 +115,7 @@ class ImagesFragment : Fragment() {
                 val response = RetrofitInstance.cloudApi.uploadImage(uploadRequest)
                 if (response.isSuccessful && response.body()?.success == true) {
                     Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
-                    fetchImages() // 업로드 후 목록 갱신
+                    fetchImages()
                 } else {
                     Toast.makeText(context, "Failed to upload image", Toast.LENGTH_SHORT).show()
                 }

@@ -37,8 +37,8 @@ data class ImageResponse(
 )
 
 data class ImageUploadRequest(
-    val file: String,
-    val instagramId: String,
+    val url: String,
+    val instagramIds: List<String>,
     val createdAt: String
 )
 

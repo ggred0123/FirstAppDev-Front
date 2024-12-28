@@ -8,11 +8,19 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+<<<<<<< HEAD
         android:divider="@android:color/transparent"
         android:dividerHeight="6dp"
         android:padding="8dp"
         android:clipToPadding="false" />
 
+=======
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:clipToPadding="false"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
+>>>>>>> c8c6b6c071f09e203d3ee9b39485c68f8c79239a
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddContact"

@@ -50,9 +50,8 @@ class ContactFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 val response = RetrofitInstance.api.getUsers()
-                // 프로필 이미지가 설정되지 않은 경우 기본값 추가
                 val updatedUsers = response.users.map { user ->
-                    user.copy(profileImageRes = R.drawable.ic_person)
+                    user.copy(profileImageRes = R.drawable.ic_add)
                 }
                 adapter.updateUsers(updatedUsers)
             } catch (e: Exception) {
@@ -160,7 +159,7 @@ class ContactFragment : Fragment() {
             try {
                 val newUser = RetrofitInstance.api.createUser(userCreate)
                 // 프로필 이미지 기본값 추가
-                val updatedUser = newUser.copy(profileImageRes = R.drawable.ic_person)
+                val updatedUser = newUser.copy(profileImageRes = R.drawable.ic_add)
                 adapter.updateUsers(adapter.users + updatedUser) // 리스트에 새 사용자 추가
                 Toast.makeText(context, "Contact added successfully", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {

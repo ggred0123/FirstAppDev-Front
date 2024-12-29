@@ -1,11 +1,16 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 }
 
+
 android {
     namespace = "com.example.mydev"
     compileSdk = 35
+
+
 
     defaultConfig {
         applicationId = "com.example.mydev"
@@ -15,8 +20,7 @@ android {
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "AWS_ACCESS_KEY", getLocalProperty("aws.access.key"))
-        buildConfigField("String", "AWS_SECRET_KEY", getLocalProperty("aws.secret.key"))
+
     }
 
     viewBinding {
@@ -40,8 +44,10 @@ android {
         jvmTarget = "1.8"
     }
 }
+
+
 fun getLocalProperty(key: String): String {
-    val properties = java.util.Properties()
+    val properties = Properties()
     val localProperties = rootProject.file("local.properties")
     if (localProperties.exists()) {
         properties.load(localProperties.inputStream())

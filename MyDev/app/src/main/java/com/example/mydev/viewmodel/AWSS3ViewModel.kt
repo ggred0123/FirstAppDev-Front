@@ -1,53 +1,50 @@
 package com.example.mydev.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mydev.model.AWSS3Response
 import com.example.mydev.repository.AWSS3Repository
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.example.mydev.model.AWSS3Response
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
-import java.io.File
-import javax.inject.Inject
+import okhttp3.RequestBody
+import retrofit2.Response
 
+class AWSS3ViewModel(private val repository: AWSS3Repository) : ViewModel() {
 
+    val preSignedUrl: MutableLiveData<AWSS3Response?> = MutableLiveData()
+    val uploadImageResponse: MutableLiveData<Int?> = MutableLiveData()
 
-class AWSS3ViewModel(
-    private val awsS3Repository: AWSS3Repository
-) : ViewModel() {
-    private val _preSignedUrl = MutableLiveData<AWSS3Response?>()
-    val preSignedUrl: LiveData<AWSS3Response?> = _preSignedUrl
-
-    private val _uploadImageResponse = MutableLiveData<Int?>()
-    val uploadImageResponse: LiveData<Int?> = _uploadImageResponse
-
-    fun getPreSignedUrl(
-        accessKey: String,
-        secretKey: String,
-        fileName: String
-    ) {
+    fun getPreSignedUrl(accessKey: String, secretKey: String, fileName: String) {
         viewModelScope.launch {
             try {
-                _preSignedUrl.value = awsS3Repository.getPreSignedUrl(
-                    accessKey = accessKey,
-                    secretKey = secretKey,
-                    fileName = fileName
-                )
+                val response = repository.getPreSignedUrl(accessKey, secretKey, fileName)
+                if (response.isSuccessful) {
+                    preSignedUrl.value = response.body()
+                } else {
+                    // 실패 시 처리
+                    preSignedUrl.value = null
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
+                preSignedUrl.value = null
             }
         }
     }
 
-    fun uploadImageToS3(preSignedUrl: String, file: MultipartBody.Part) {
+    fun uploadImageToS3(preSignedUrl: String, file: RequestBody) {
         viewModelScope.launch {
             try {
-                _uploadImageResponse.value = awsS3Repository.uploadImageToS3(preSignedUrl, file)
+                val response = repository.uploadImageToS3(preSignedUrl, file)
+                if (response.isSuccessful) {
+                    // S3는 일반적으로 200 또는 204 No Content 반환
+                    uploadImageResponse.value = response.code() // 200, 204 등
+                } else {
+                    uploadImageResponse.value = response.code() // 오류 코드
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
-                _uploadImageResponse.value = null
+                uploadImageResponse.value = null
             }
         }
     }

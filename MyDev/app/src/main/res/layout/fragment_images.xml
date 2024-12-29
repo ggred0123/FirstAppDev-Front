@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- GridView로 서버에서 받은 이미지들을 표시 -->
     <GridView
         android:id="@+id/gridViewImages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:columnWidth="120dp"
         android:numColumns="3"
-        android:stretchMode="columnWidth"
-        android:horizontalSpacing="0dp"
-        android:verticalSpacing="0dp" />
+        android:verticalSpacing="4dp"
+        android:horizontalSpacing="4dp"
+        android:stretchMode="columnWidth"/>
 
+    <!-- 우측 하단 FloatingActionButton -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@android:drawable/ic_input_add"
-        app:fabSize="normal" />
+        android:scaleType="centerCrop"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_add2"
+        app:maxImageSize="40dp"
+        />
+
 </FrameLayout>

@@ -37,10 +37,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:srcCompat="@android:drawable/ic_input_add"
+        app:srcCompat="@drawable/ic_add_call"
         app:tint="@android:color/white"
         app:backgroundTint="?attr/colorPrimary"
-        android:contentDescription="Add contact" />
+        android:contentDescription="Add contact"
+        app:maxImageSize="25dp"
+        />
 
 
 </FrameLayout>

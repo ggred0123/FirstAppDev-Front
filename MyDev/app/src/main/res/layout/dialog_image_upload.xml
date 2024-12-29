@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 이미지 미리보기 -->
+    <ImageView
+        android:id="@+id/imgPreview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop" />
+
+    <!-- Instagram ID들 -->
+    <EditText
+        android:id="@+id/etInstagramIds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="인스타 ID들 (쉼표구분)"
+        android:layout_marginTop="8dp"/>
+
+    <!-- 날짜 선택 -->
+    <Button
+        android:id="@+id/btnPickDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="날짜 선택"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/tvSelectedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="날짜가 선택되지 않음"
+        android:layout_marginTop="4dp"/>
+
+    <!-- 저장 버튼 -->
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="저장하기"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>

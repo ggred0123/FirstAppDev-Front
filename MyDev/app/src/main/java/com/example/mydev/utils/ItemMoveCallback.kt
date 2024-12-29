@@ -33,4 +33,3 @@ class ItemMoveCallback(private val adapter: ImageAdapter) : ItemTouchHelper.Call
         return true // 길게 눌러서 드래그를 시작할 수 있도록 설정
     }
 }
-

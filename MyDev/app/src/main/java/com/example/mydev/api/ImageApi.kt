@@ -23,6 +23,4 @@ interface ImageApi {
         @Body request: ImageUploadRequest
     ): Response<ImageUploadResponse>
 
-
-
 }

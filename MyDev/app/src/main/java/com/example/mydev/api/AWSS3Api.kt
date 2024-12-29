@@ -15,7 +15,7 @@ import retrofit2.http.Url
 
 interface AWSS3Api {
 
-    // 1) Presigned URL 발급용
+
     @GET("aws/s3")
     suspend fun getPreSignedUrl(
         @Header("AccessKey") accessKey: String,
@@ -23,7 +23,6 @@ interface AWSS3Api {
         @Query("fileName") fileName: String
     ): Response<AWSS3Response>
 
-    // 2) 실제 S3 업로드 (PUT)
     @PUT
     suspend fun uploadImageToS3(
         @Url preSignedUrl: String,

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 기존 스타일들 -->
+
+    <!-- 커스텀 AlertDialog 스타일 -->
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- 다이얼로그 배경색 설정 -->
+        <item name="colorAccent">#E6E6FA</item> <!-- 연한 보라색 -->
+        <!-- 제목 텍스트 스타일 설정 -->
+        <item name="android:textColorPrimary">#4A148C</item> <!-- 진한 보라색 -->
+        <!-- 메시지 텍스트 스타일 설정 -->
+        <item name="android:textColorSecondary">#4A148C</item> <!-- 진한 보라색 -->
+    </style>
+</resources>

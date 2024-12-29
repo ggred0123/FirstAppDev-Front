@@ -34,7 +34,7 @@ class ImagesFragment : Fragment() {
         imageAdapter = ImageAdapter(requireContext(), selectedImages)
         gridView.adapter = imageAdapter
 
-        // FloatingActionButton 클릭 리스너
+
         fabAddImage.setOnClickListener {
             openGallery()
         }

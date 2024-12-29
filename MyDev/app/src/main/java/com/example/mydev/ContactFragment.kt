@@ -9,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.material3.Button
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.mydev.adapter.ContactAdapter
@@ -108,27 +110,28 @@ class ContactFragment : Fragment() {
         }
     }
 
-
-
-
     private fun showUserDetail(user: User) {
-        val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("User Detail")
-            .setMessage("""
-            Name: ${user.userName}
-            Email: ${user.email}
-            Birthday: ${user.birthday}
-            Phone: ${user.phoneNumber}
-            Instagram: ${user.instagramId}
-            Created: ${user.createdAt}
-        """.trimIndent())
-            .setPositiveButton("Edit") { dialog, _ ->
+        val dialogView = layoutInflater.inflate(R.layout.dialog_user_detail, null)
+
+        // Set the user details in the corresponding TextViews
+        dialogView.findViewById<TextView>(R.id.tvName).text = "Name: ${user.userName}"
+        dialogView.findViewById<TextView>(R.id.tvEmail).text = "Email: ${user.email}"
+        dialogView.findViewById<TextView>(R.id.tvBirthday).text = "Birthday: ${user.birthday}"
+        dialogView.findViewById<TextView>(R.id.tvPhone).text = "Phone: ${user.phoneNumber}"
+        dialogView.findViewById<TextView>(R.id.tvInstagram).text = "Instagram: ${user.instagramId}"
+        dialogView.findViewById<TextView>(R.id.tvCreated).text = "Created: ${user.createdAt}"
+
+        // Create and show the AlertDialog with the updated layout
+        AlertDialog.Builder(requireContext())
+            .setView(dialogView) // Set the custom layout
+            .setPositiveButton("Edit") { _, _ ->
                 showEditDialog(user)
             }
             .setNegativeButton("Close", null)
-            .create()
-        dialog.show()
+            .show()
     }
+
+
 
     private fun showEditDialog(user: User) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_contact, null)
@@ -173,8 +176,10 @@ class ContactFragment : Fragment() {
 
     private fun showAddContactDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_contact, null)
+        val customTitleView = layoutInflater.inflate(R.layout.dialog_title, null)
 
         AlertDialog.Builder(requireContext())
+            .setCustomTitle(customTitleView)
             .setTitle("Add New Contact")
             .setView(dialogView)
             .setPositiveButton("Add") { dialog, _ ->
@@ -204,7 +209,7 @@ class ContactFragment : Fragment() {
                 Toast.makeText(context, "Contact added successfully", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-                Log.e("ContactFragment", "Error creating user", e)
+
             }
         }
     }

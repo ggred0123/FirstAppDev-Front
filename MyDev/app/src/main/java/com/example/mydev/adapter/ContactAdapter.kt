@@ -3,8 +3,10 @@ package com.example.mydev.adapter
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
@@ -38,17 +40,32 @@ class ContactAdapter(context: Context) : BaseAdapter() {
             holder = view.tag as ViewHolder
         }
 
+        view.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // 터치 시작 시 위로 떠오르는 애니메이션 적용
+                    val liftUpAnimation = AnimationUtils.loadAnimation(parent?.context ?: v.context, R.anim.item_lift_up)
+                    v.startAnimation(liftUpAnimation)
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    // 터치 종료 시 원래 위치로 돌아오는 애니메이션 적용
+                    val liftDownAnimation = AnimationUtils.loadAnimation(parent?.context ?: v.context, R.anim.item_lift_down)
+                    v.startAnimation(liftDownAnimation)
+                }
+            }
+            false
+        }
+
+
+
+
         // 데이터 바인딩
         val user = getItem(position)
         holder.nameTextView.text = user.userName
         holder.phoneTextView.text = user.phoneNumber
 
-        // 기본 프로필 이미지를 설정하거나 사용자 이미지 추가
         Log.d("ContactAdapter", "Setting image resource: ${user.profileImageRes}")
         holder.profileImageView.setImageResource(user.profileImageRes)
-// 기본 아이콘
-        // 예를 들어, Glide를 사용해 사용자 프로필 이미지 로드 가능:
-        // Glide.with(view.context).load(user.profileImageUrl).into(holder.profileImageView)
 
         return view
     }

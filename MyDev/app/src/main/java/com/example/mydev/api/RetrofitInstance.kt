@@ -16,4 +16,8 @@ object RetrofitInstance {
     val api: ApiService by lazy {
         retrofit.create(ApiService::class.java)
     }
+
+    val awsS3Api: AWSS3Api by lazy {
+        retrofit.create(AWSS3Api::class.java)
+    }
 }

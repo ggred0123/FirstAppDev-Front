@@ -13,8 +13,10 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "AWS_ACCESS_KEY", getLocalProperty("aws.access.key"))
+        buildConfigField("String", "AWS_SECRET_KEY", getLocalProperty("aws.secret.key"))
     }
 
     viewBinding {
@@ -38,6 +40,15 @@ android {
         jvmTarget = "1.8"
     }
 }
+fun getLocalProperty(key: String): String {
+    val properties = java.util.Properties()
+    val localProperties = rootProject.file("local.properties")
+    if (localProperties.exists()) {
+        properties.load(localProperties.inputStream())
+    }
+    return "\"${properties.getProperty(key)}\""
+}
+
 
 dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
@@ -54,6 +65,13 @@ dependencies {
     implementation("androidx.compose.material3:material3-android:1.3.1")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation ("com.google.dagger:hilt-android:2.44")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+
 
     implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)

@@ -15,10 +15,10 @@ class AWSS3ViewModel(private val repository: AWSS3Repository) : ViewModel() {
     val preSignedUrl: MutableLiveData<AWSS3Response?> = MutableLiveData()
     val uploadImageResponse: MutableLiveData<Int?> = MutableLiveData()
 
-    fun getPreSignedUrl(accessKey: String, secretKey: String, fileName: String) {
+    fun getPreSignedUrl(fileName: String) {
         viewModelScope.launch {
             try {
-                val response = repository.getPreSignedUrl(accessKey, secretKey, fileName)
+                val response = repository.getPreSignedUrl(fileName)
                 if (response.isSuccessful) {
                     preSignedUrl.value = response.body()
                 } else {

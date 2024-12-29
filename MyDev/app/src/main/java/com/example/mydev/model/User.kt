@@ -5,7 +5,7 @@ import com.example.mydev.R
 data class User(
     val id: Int,
     val userName: String,
-    val profileImageRes: Int = R.drawable.ic_person,
+    val profileImageRes: Int = R.drawable.ic_add,
     val email: String,
     val birthday: String,
     val phoneNumber: String,

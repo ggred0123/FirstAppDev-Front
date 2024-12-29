@@ -62,7 +62,7 @@ class ImagesFragment : Fragment() {
     }
 
     companion object {
-        private const val GALLERY_REQUEST_CODE = 1001 // 갤러리 요청 코드
+        private const val GALLERY_REQUEST_CODE = 1001
     }
 }
 

@@ -3,6 +3,11 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+        <entry key="imageWizard">
+          <value>
+            <PersistentState />
+          </value>
+        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -19,6 +24,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/face/baseline_face_24.xml" />
+                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/add_call/baseline_add_call_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,6 +35,7 @@
                         <option name="values">
                           <map>
                             <entry key="outputName" value="ic_add" />
+                            <entry key="outputName" value="ic_add_call" />
                           </map>
                         </option>
                       </PersistentState>

@@ -1,11 +1,16 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 }
 
+
 android {
     namespace = "com.example.mydev"
     compileSdk = 35
+
+
 
     defaultConfig {
         applicationId = "com.example.mydev"
@@ -15,6 +20,7 @@ android {
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     viewBinding {
@@ -39,6 +45,17 @@ android {
     }
 }
 
+
+fun getLocalProperty(key: String): String {
+    val properties = Properties()
+    val localProperties = rootProject.file("local.properties")
+    if (localProperties.exists()) {
+        properties.load(localProperties.inputStream())
+    }
+    return "\"${properties.getProperty(key)}\""
+}
+
+
 dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -54,6 +71,16 @@ dependencies {
     implementation("androidx.compose.material3:material3-android:1.3.1")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation ("com.google.dagger:hilt-android:2.44")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+
+
+
 
     implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)

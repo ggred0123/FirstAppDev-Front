@@ -6,6 +6,7 @@ import com.example.mydev.model.ImageUploadRequest
 import com.example.mydev.model.ImageUploadResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -34,6 +35,8 @@ interface ImageApi {
     suspend fun uploadImage(
         @Body request: ImageUploadRequest
     ): Response<ImageUploadResponse>
+
+
 
 
 }

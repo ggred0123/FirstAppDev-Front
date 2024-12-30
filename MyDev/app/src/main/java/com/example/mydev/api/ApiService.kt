@@ -4,7 +4,9 @@ import com.example.mydev.model.User
 import com.example.mydev.model.UserCreate
 import com.example.mydev.model.UserResponse
 import com.example.mydev.model.UserUpdate
+import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -25,5 +27,8 @@ interface ApiService {
 
     @GET("users/{userName}")
     suspend fun searchUsers(@Path("userName") userName: String): UserResponse
+
+    @DELETE("users/{id}")
+    suspend fun deleteUser(@Path("id") userId: Int) : Response<Unit>
 
 }

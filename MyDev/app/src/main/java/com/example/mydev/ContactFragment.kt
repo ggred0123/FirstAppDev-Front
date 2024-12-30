@@ -22,21 +22,65 @@ import com.example.mydev.model.User
 import com.example.mydev.model.UserCreate
 import com.example.mydev.model.UserUpdate
 import kotlinx.coroutines.launch
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 
 class ContactFragment : Fragment() {
     private lateinit var binding: FragmentContactBinding
     private lateinit var adapter: ContactAdapter
-    private var allUsers: List<User> = listOf()  // Store all users
+    private var allUsers: List<User> = listOf()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentContactBinding.inflate(inflater, container, false)
+        setupRecyclerView()
+        setupSearchView()
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupListView()
-        setupSearchView()
         fetchUsers()
 
         binding.fabAddContact.setOnClickListener {
             showAddContactDialog()
         }
+    }
+
+    private fun setupRecyclerView() {
+        adapter = ContactAdapter(
+            context = requireContext(),
+            onItemClick = { user -> showUserDetail(user) },
+            onDeleteClick = { user -> deleteUser(user.id) }
+        )
+
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = this@ContactFragment.adapter
+        }
+
+        // Swipe to delete 설정
+        val swipeHandler = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                showDeleteConfirmationDialog(position)
+            }
+        }
+
+        ItemTouchHelper(swipeHandler).attachToRecyclerView(binding.recyclerView)
     }
 
     private fun setupSearchView() {
@@ -57,10 +101,8 @@ class ContactFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 if (query.isNullOrBlank()) {
-                    // If query is empty, show all users
                     adapter.updateUsers(allUsers)
                 } else {
-                    // Search in API
                     val response = RetrofitInstance.api.searchUsers(query)
                     val searchResults = response.users.map { user ->
                         user.copy(profileImageRes = R.drawable.ic_add)
@@ -89,31 +131,9 @@ class ContactFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentContactBinding.inflate(inflater, container, false)
-        setupListView()
-        fetchUsers()
-        return binding.root
-    }
-
-    private fun setupListView() {
-        adapter = ContactAdapter(requireContext())
-        binding.listView.adapter = adapter
-
-        binding.listView.setOnItemClickListener { _, _, position, _ ->
-            val user = adapter.getItem(position)
-            showUserDetail(user)
-        }
-    }
-
     private fun showUserDetail(user: User) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_user_detail, null)
 
-        // Set the user details in the corresponding TextViews
         dialogView.findViewById<TextView>(R.id.tvName).text = "Name: ${user.userName}"
         dialogView.findViewById<TextView>(R.id.tvEmail).text = "Email: ${user.email}"
         dialogView.findViewById<TextView>(R.id.tvBirthday).text = "Birthday: ${user.birthday}"
@@ -121,9 +141,8 @@ class ContactFragment : Fragment() {
         dialogView.findViewById<TextView>(R.id.tvInstagram).text = "Instagram: ${user.instagramId}"
         dialogView.findViewById<TextView>(R.id.tvCreated).text = "Created: ${user.createdAt}"
 
-        // Create and show the AlertDialog with the updated layout
         AlertDialog.Builder(requireContext())
-            .setView(dialogView) // Set the custom layout
+            .setView(dialogView)
             .setPositiveButton("Edit") { _, _ ->
                 showEditDialog(user)
             }
@@ -131,12 +150,40 @@ class ContactFragment : Fragment() {
             .show()
     }
 
+    private fun showDeleteConfirmationDialog(position: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Contact")
+            .setMessage("Are you sure you want to delete this contact?")
+            .setPositiveButton("Delete") { _, _ ->
+                val user = adapter.getUser(position)
+                deleteUser(user.id)
+            }
+            .setNegativeButton("Cancel") { _, _ ->
+                adapter.notifyItemChanged(position)
+            }
+            .show()
+    }
 
+    private fun deleteUser(userId: Int) {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitInstance.api.deleteUser(userId)
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "Contact deleted successfully", Toast.LENGTH_SHORT).show()
+                    fetchUsers()
+                } else {
+                    Toast.makeText(context, "Failed to delete contact", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e("ContactFragment", "Error deleting user", e)
+            }
+        }
+    }
 
     private fun showEditDialog(user: User) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_contact, null)
 
-        // 현재 데이터 채우기
         dialogView.findViewById<EditText>(R.id.edtName).setText(user.userName)
         dialogView.findViewById<EditText>(R.id.edtEmail).setText(user.email)
         dialogView.findViewById<EditText>(R.id.edtBirthday).setText(user.birthday)
@@ -163,16 +210,15 @@ class ContactFragment : Fragment() {
     private fun updateUser(userId: Int, userUpdate: UserUpdate) {
         lifecycleScope.launch {
             try {
-                val updatedUser = RetrofitInstance.api.updateUser(userId, userUpdate)
+                RetrofitInstance.api.updateUser(userId, userUpdate)
                 Toast.makeText(context, "Contact updated successfully", Toast.LENGTH_SHORT).show()
-                fetchUsers() // 목록 새로고침
+                fetchUsers()
             } catch (e: Exception) {
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                 Log.e("ContactFragment", "Error updating user", e)
             }
         }
     }
-
 
     private fun showAddContactDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_contact, null)
@@ -203,16 +249,12 @@ class ContactFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 val newUser = RetrofitInstance.api.createUser(userCreate)
-                // 프로필 이미지 기본값 추가
                 val updatedUser = newUser.copy(profileImageRes = R.drawable.ic_add)
-                adapter.updateUsers(adapter.users + updatedUser) // 리스트에 새 사용자 추가
+                adapter.updateUsers(adapter.users + updatedUser)
                 Toast.makeText(context, "Contact added successfully", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-
             }
         }
     }
-
-
 }

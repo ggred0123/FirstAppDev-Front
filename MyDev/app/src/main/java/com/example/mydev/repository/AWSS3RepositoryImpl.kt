@@ -9,7 +9,7 @@ import retrofit2.Response
 class AWSS3RepositoryImpl(private val api: AWSS3Api) : AWSS3Repository {
 
     override suspend fun getPreSignedUrl(accessKey: String, secretKey: String, fileName: String): Response<AWSS3Response> {
-        return api.getPreSignedUrl(accessKey, secretKey, fileName)
+        return api.getPreSignedUrl(fileName)
     }
 
     override suspend fun uploadImageToS3(

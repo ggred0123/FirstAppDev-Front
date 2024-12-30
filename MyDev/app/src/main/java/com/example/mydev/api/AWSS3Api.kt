@@ -18,8 +18,6 @@ interface AWSS3Api {
 
     @GET("aws/s3")
     suspend fun getPreSignedUrl(
-        @Header("AccessKey") accessKey: String,
-        @Header("SecretKey") secretKey: String,
         @Query("fileName") fileName: String
     ): Response<AWSS3Response>
 

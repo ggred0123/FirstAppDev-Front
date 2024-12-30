@@ -118,8 +118,7 @@ class ImageUploadDialogFragment : DialogFragment() {
             try {
                 // 1) Presigned URL 요청
                 val res1 = RetrofitInstance.awsS3Api.getPreSignedUrl(
-                    BuildConfig.AWS_ACCESS_KEY,
-                    BuildConfig.AWS_SECRET_KEY,
+
                     filePath
                 )
                 if (!res1.isSuccessful || res1.body() == null) {

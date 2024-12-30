@@ -24,10 +24,10 @@ class ImageDetailDialogFragment : DialogFragment() {
     companion object {
         private const val ARG_IMAGE_ID = "imageId"
 
-        fun newInstance(imageId: String): ImageDetailDialogFragment {
+        fun newInstance(imageId: Int): ImageDetailDialogFragment {
             val fragment = ImageDetailDialogFragment()
             val args = Bundle()
-            args.putString(ARG_IMAGE_ID, imageId)
+            args.putInt(ARG_IMAGE_ID, imageId)
             fragment.arguments = args
             return fragment
         }
@@ -43,14 +43,16 @@ class ImageDetailDialogFragment : DialogFragment() {
         tvInstagramId = view.findViewById(R.id.tvInstagramId)
         tvCreatedAt = view.findViewById(R.id.tvCreatedAt)
 
-        val imageId = arguments?.getString(ARG_IMAGE_ID) ?: return view
+        val imageId = arguments?.getInt(ARG_IMAGE_ID) ?: -1
+        if (imageId != -1) {
+            fetchImageDetail(imageId)
+        }
 
-        fetchImageDetail(imageId)
 
         return view
     }
 
-    private fun fetchImageDetail(imageId: String) {
+    private fun fetchImageDetail(imageId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = RetrofitInstance.imageApi.getImageDetail(imageId)

@@ -27,7 +27,7 @@ interface ImageApi {
 
     @GET("images/detail/{imageId}")
     suspend fun getImageDetail(
-        @Path("imageId") imageId: String
+        @Path("imageId") imageId: Int
     ): Response<ImageData>
 
     @POST("images/upload")

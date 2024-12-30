@@ -34,7 +34,12 @@ class ImagesFragment : Fragment() {
 
     private lateinit var fabAddImage: FloatingActionButton
     private lateinit var recyclerView: RecyclerView
-    private val imageAdapter by lazy { ImageAdapter(requireContext()) }
+    private val imageAdapter by lazy {
+        ImageAdapter(
+            context = requireContext(),
+            items = mutableListOf()
+        )
+    }
     private var selectedImageUri: Uri? = null
 
     override fun onCreateView(
@@ -72,7 +77,7 @@ class ImagesFragment : Fragment() {
     private fun setupRecyclerView() {
         // 이미지 클릭 이벤트 추가
         imageAdapter.setOnItemClickListener { imageId ->
-            val dialog = ImageDetailDialogFragment.newInstance(imageId.toString())
+            val dialog = ImageDetailDialogFragment.newInstance(imageId)
             dialog.show(childFragmentManager, "ImageDetailDialog")
         }
 

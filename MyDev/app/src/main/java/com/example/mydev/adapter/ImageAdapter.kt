@@ -29,7 +29,6 @@ class ImageAdapter(
                 }
             }
         }
-
     }
 
     fun setOnItemClickListener(listener: (Int) -> Unit) {
@@ -49,11 +48,14 @@ class ImageAdapter(
             .load(imageData.url)
             .into(holder.imgItem)
 
+        // 여기에도 클릭 리스너 설정
         holder.itemView.setOnClickListener {
             onItemClickListener?.invoke(imageData.id)
         }
+        holder.imgItem.setOnClickListener {
+            onItemClickListener?.invoke(imageData.id)
+        }
     }
-
 
     // 아이템 수 반환
     override fun getItemCount(): Int = items.size

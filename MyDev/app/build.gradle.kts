@@ -9,6 +9,9 @@ plugins {
 android {
     namespace = "com.example.mydev"
     compileSdk = 35
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 
 
 

@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mydev.adapter.ImageAdapter
+import com.example.mydev.adapter.ItemMoveCallback
 import com.example.mydev.api.RetrofitInstance
-import com.example.mydev.utils.ItemMoveCallback
 import com.example.mydev.viewmodel.ImagesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope

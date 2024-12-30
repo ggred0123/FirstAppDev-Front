@@ -82,7 +82,8 @@ class ThirdTabFragment : Fragment() {
     }
 
     private fun groupImagesByInstagramId(images: List<ImageData>): List<Album> {
-        return images.groupBy { it.instagramIds.firstOrNull() ?: "Unknown" }
+        return images.filterNot { it.instagramIds.isNullOrEmpty() }
+            .groupBy { it.instagramIds.firstOrNull() ?: "Unknown" }
             .map { (instagramId, imageList) ->
                 Album(
                     instagramId = instagramId,
@@ -90,4 +91,5 @@ class ThirdTabFragment : Fragment() {
                 )
             }
     }
+
 }

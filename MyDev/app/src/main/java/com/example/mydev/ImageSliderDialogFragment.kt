@@ -41,10 +41,16 @@ class ImageSliderDialogFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog?.window?.apply {
-            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            // 다이얼로그 크기를 화면의 90%로 설정
+            val width = (resources.displayMetrics.widthPixels * 0.9).toInt()
+            val height = (resources.displayMetrics.heightPixels * 0.8).toInt()
+            setLayout(width, height)
+
+            // 배경 설정 (선택적으로 조정 가능)
             setBackgroundDrawable(ColorDrawable(Color.BLACK))
         }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

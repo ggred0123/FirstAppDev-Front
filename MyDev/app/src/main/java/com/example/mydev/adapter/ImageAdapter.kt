@@ -15,9 +15,24 @@ class ImageAdapter(
     private var items: MutableList<ImageData> = mutableListOf()
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>(), ItemTouchHelperAdapter {
 
+    private var onItemClickListener: ((Int) -> Unit)? = null
+
     // ViewHolder 정의
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgItem: ImageView = itemView.findViewById(R.id.imgItem)
+
+        init {
+            itemView.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClickListener?.invoke(items[position].id)
+                }
+            }
+        }
+    }
+
+    fun setOnItemClickListener(listener: (Int) -> Unit) {
+        onItemClickListener = listener
     }
 
     // 아이템 레이아웃 생성
@@ -26,29 +41,20 @@ class ImageAdapter(
         return ImageViewHolder(view)
     }
 
-    // 뷰에 데이터 바인딩
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         val imageData = items[position]
 
-        // Glide를 사용하여 이미지 로드
         Glide.with(context)
             .load(imageData.url)
             .into(holder.imgItem)
 
-        // 만약 '터치해서 바로 드래그'를 원하면, 아래처럼 setOnTouchListener를 사용할 수도 있습니다.
-        // (롱 프레스로 드래그가 가능하다면 이 부분은 생략해도 OK)
-        /*
-        holder.imgItem.setOnTouchListener { v, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    // 드래그 시작
-                    v.startDragAndDrop(null, View.DragShadowBuilder(v), v, 0)
-                    true
-                }
-                else -> false
-            }
+        // 여기에도 클릭 리스너 설정
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.invoke(imageData.id)
         }
-        */
+        holder.imgItem.setOnClickListener {
+            onItemClickListener?.invoke(imageData.id)
+        }
     }
 
     // 아이템 수 반환

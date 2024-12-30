@@ -12,10 +12,13 @@ import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mydev.adapter.ImageAdapter
 import com.example.mydev.api.RetrofitInstance
+import com.example.mydev.utils.ItemMoveCallback
 import com.example.mydev.viewmodel.ImagesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +29,7 @@ import kotlinx.coroutines.withContext
 class ImagesFragment : Fragment() {
 
     private lateinit var fabAddImage: FloatingActionButton
-    private lateinit var gridView: GridView
+    private lateinit var recyclerView: RecyclerView
 
     // 실제 서버 이미지 목록
     private val imageAdapter by lazy { ImageAdapter(requireContext()) }
@@ -41,20 +44,36 @@ class ImagesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_images, container, false)
 
         fabAddImage = view.findViewById(R.id.fabAddImage)
-        gridView = view.findViewById(R.id.gridViewImages)
+        recyclerView = view.findViewById(R.id.recyclerViewImages)
 
-        gridView.adapter = imageAdapter
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열의 그리드 레이아웃
+        recyclerView.adapter = imageAdapter
 
-        // 1) 진입 시 서버에서 이미지 목록 GET
+        // ItemTouchHelper 연결
+        val itemTouchHelper = ItemTouchHelper(ItemMoveCallback(imageAdapter))
+        itemTouchHelper.attachToRecyclerView(recyclerView) // RecyclerView에 연결
+
+        // 서버에서 이미지 목록 가져오기
         fetchImagesFromServer()
 
-        // 2) FAB 클릭 → 갤러리 오픈
+        // FAB 클릭 → 갤러리 열기
         fabAddImage.setOnClickListener {
             openGallery()
         }
 
         return view
     }
+
+    private fun setupRecyclerView() {
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열의 그리드 레이아웃
+        recyclerView.adapter = imageAdapter
+
+        // ItemTouchHelper 연결
+        val callback = ItemMoveCallback(imageAdapter)
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
 
     // 갤러리 열기
     private fun openGallery() {
@@ -101,4 +120,5 @@ class ImagesFragment : Fragment() {
         private const val GALLERY_REQUEST_CODE = 1001
     }
 }
+
 

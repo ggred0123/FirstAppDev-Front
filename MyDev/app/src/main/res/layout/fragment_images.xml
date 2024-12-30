@@ -2,20 +2,38 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- GridView로 서버에서 받은 이미지들을 표시 -->
-    <GridView
-        android:id="@+id/gridViewImages"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnWidth="120dp"
-        android:numColumns="3"
-        android:verticalSpacing="4dp"
-        android:horizontalSpacing="4dp"
-        android:stretchMode="columnWidth"/>
+    <!-- Uploaded Images 텍스트 추가 -->
 
-    <!-- 우측 하단 FloatingActionButton -->
+    <!-- RecyclerView -->
+
+    <!-- Floating Action Button -->
+    <TextView
+        android:id="@+id/tvUploadedImages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:background="#4B0082"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Uploaded Images"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewImages"
+        android:layout_width="match_parent"
+        android:layout_marginTop="70dp"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="4dp"
+
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddImage"
         android:layout_width="wrap_content"
@@ -24,7 +42,8 @@
         android:scaleType="centerCrop"
         android:layout_gravity="bottom|end"
         android:src="@drawable/ic_add2"
-        app:maxImageSize="40dp"
-        />
+        app:maxImageSize="40dp" />
 
 </FrameLayout>
+
+

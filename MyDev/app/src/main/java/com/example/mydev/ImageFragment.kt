@@ -32,9 +32,6 @@ import androidx.lifecycle.lifecycleScope
 class ImagesFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
-
-
-
     private lateinit var fabAddImage: FloatingActionButton
     private lateinit var recyclerView: RecyclerView
     private val imageAdapter by lazy { ImageAdapter(requireContext()) }
@@ -46,37 +43,43 @@ class ImagesFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_images, container, false)
 
+        // View 초기화
         fabAddImage = view.findViewById(R.id.fabAddImage)
         recyclerView = view.findViewById(R.id.recyclerViewImages)
 
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-        recyclerView.adapter = imageAdapter
+        // RecyclerView 설정
+        setupRecyclerView()
 
+        // ItemTouchHelper 연결
         val itemTouchHelper = ItemTouchHelper(ItemMoveCallback(imageAdapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
+        // 서버에서 이미지 목록 가져오기
         fetchImagesFromServer()
 
+        // FloatingActionButton 클릭 리스너 설정
         fabAddImage.setOnClickListener {
             openGallery()
         }
 
         return view
     }
-
-    private fun setupRecyclerView() {
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-        recyclerView.adapter = imageAdapter
-
-        val callback = ItemMoveCallback(imageAdapter)
-        val itemTouchHelper = ItemTouchHelper(callback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
-    }
-
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
+    }
+    private fun setupRecyclerView() {
+        // 이미지 클릭 이벤트 추가
+        imageAdapter.setOnItemClickListener { imageId ->
+            val dialog = ImageDetailDialogFragment.newInstance(imageId.toString())
+            dialog.show(childFragmentManager, "ImageDetailDialog")
+        }
+
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열 그리드
+        recyclerView.adapter = imageAdapter
+
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

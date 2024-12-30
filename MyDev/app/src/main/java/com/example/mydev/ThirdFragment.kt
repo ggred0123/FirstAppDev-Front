@@ -6,18 +6,39 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mydev.adapter.AlbumAdapter
 import com.example.mydev.api.RetrofitInstance
 import com.example.mydev.model.Album
 import com.example.mydev.model.ImageData
+import com.example.mydev.viewmodel.SharedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.fragment.app.activityViewModels
+
 
 class ThirdTabFragment : Fragment() {
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // 이미지 업데이트 이벤트 구독
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sharedViewModel.imageUpdateTrigger.collect {
+                    // 이미지가 업데이트되면 새로운 데이터를 가져옴
+                    fetchAlbumsFromServer()
+                }
+            }
+        }
+    }
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var albumAdapter: AlbumAdapter

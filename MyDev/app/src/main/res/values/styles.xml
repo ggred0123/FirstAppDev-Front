@@ -10,5 +10,9 @@
         <item name="android:textColorPrimary">#4A148C</item> <!-- 진한 보라색 -->
         <!-- 메시지 텍스트 스타일 설정 -->
         <item name="android:textColorSecondary">#4A148C</item> <!-- 진한 보라색 -->
+        <item name="android:windowMinWidthMajor">75%</item>
+        <item name="android:windowMinWidthMinor">75%</item>
     </style>
+
+
 </resources>

@@ -1,9 +1,12 @@
 // ImageListResponse.kt
 package com.example.mydev.model
 
+import android.os.Parcelable
+import java.io.Serializable
+
 data class ImageListResponse(
-    val images: List<ImageData>
-)
+    val images: ArrayList<ImageData>
+): Serializable
 
 // ImageData.kt
 data class ImageData(
@@ -26,4 +29,9 @@ data class ImageUploadResponse(
     val url: String,
     val instagramIds: List<String>,
     val createdAt: String
+)
+
+data class Album(
+    val instagramId: String,
+    val images: List<ImageData>
 )

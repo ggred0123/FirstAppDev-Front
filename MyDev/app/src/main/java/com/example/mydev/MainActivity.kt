@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             when (position) {
                 0 -> tab.text = "Contact"
                 1 -> tab.text = "Images"
-                2 -> tab.text = "Dice"
+                2 -> tab.text = "Albums"
             }
         }.attach()
     }

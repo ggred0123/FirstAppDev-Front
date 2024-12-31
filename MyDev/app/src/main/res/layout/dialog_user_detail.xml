@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
-        android:background="#FFFFFF">
+        android:background="#000000">
 
         <TextView
             android:id="@+id/tvUserDetailTitle"
@@ -21,9 +21,9 @@
             android:layout_height="wrap_content"
             android:text="User Detail"
             android:textSize="21sp"
-            android:textStyle="bold"
+
             android:gravity="center"
-            android:textColor="#4B0082"
+            android:textColor="#FFFFFF"
             android:layout_marginBottom="16dp" />
 
         <TextView
@@ -31,7 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Name:"
-            android:textStyle="bold"
+            android:textColor="#808080"
+
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />
 
@@ -40,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Email:"
-            android:textStyle="bold"
+            android:textColor="#808080"
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />
 
@@ -49,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Birthday:"
-            android:textStyle="bold"
+            android:textColor="#808080"
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />
 
@@ -58,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Phone:"
-            android:textStyle="bold"
+            android:textColor="#808080"
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />
 
@@ -67,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Instagram:"
-            android:textStyle="bold"
+            android:textColor="#808080"
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />
 
@@ -76,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Created:"
-            android:textStyle="bold"
+            android:textColor="#808080"
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />
 

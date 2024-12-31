@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:text="Add New Contact"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:gravity="center"
         android:padding="16dp" />

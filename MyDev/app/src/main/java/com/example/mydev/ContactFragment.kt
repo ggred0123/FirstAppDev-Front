@@ -158,6 +158,7 @@ class ContactFragment : Fragment() {
     private fun showUserDetail(user: User) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_user_detail, null)
 
+        // 텍스트뷰 설정
         dialogView.findViewById<TextView>(R.id.tvName).text = "Name: ${user.userName}"
         dialogView.findViewById<TextView>(R.id.tvEmail).text = "Email: ${user.email}"
         dialogView.findViewById<TextView>(R.id.tvBirthday).text = "Birthday: ${user.birthday}"
@@ -165,13 +166,26 @@ class ContactFragment : Fragment() {
         dialogView.findViewById<TextView>(R.id.tvInstagram).text = "Instagram: ${user.instagramId}"
         dialogView.findViewById<TextView>(R.id.tvCreated).text = "Created: ${user.createdAt}"
 
-        AlertDialog.Builder(requireContext())
+        val dialog = AlertDialog.Builder(requireContext(), R.style.DarkDialog)
             .setView(dialogView)
             .setPositiveButton("Edit") { _, _ ->
                 showEditDialog(user)
             }
             .setNegativeButton("Close", null)
-            .show()
+            .create()
+
+        dialog.setOnShowListener {
+            // Add 버튼 색상 설정
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(requireContext().getColor(R.color.purple2))
+
+            // Cancel 버튼 색상 설정
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(requireContext().getColor(R.color.purple2))
+        }
+
+        // 다이얼로그 창 배경 설정
+        dialog.window?.setBackgroundDrawableResource(android.R.color.black)
+
+        dialog.show()
     }
 
     private fun showDeleteConfirmationDialog(position: Int) {

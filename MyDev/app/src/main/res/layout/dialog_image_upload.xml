@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background= "#000000"
     android:padding="16dp">
 
     <!-- 이미지 미리보기 -->
     <ImageView
         android:id="@+id/imgPreview"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="280dp"
         android:scaleType="centerCrop" />
 
     <!-- Instagram ID들 -->
@@ -18,30 +19,41 @@
         android:id="@+id/etInstagramIds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="인스타 ID들 (쉼표구분)"
+        android:hint="Instagram IDs"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#808080"
         android:layout_marginTop="8dp"/>
 
     <!-- 날짜 선택 -->
     <Button
         android:id="@+id/btnPickDate"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="날짜 선택"
+        android:text="Select Date"
+        android:gravity = "center"
+        android:textSize = "16dp"
+        android:backgroundTint="#212121"
         android:layout_marginTop="8dp"/>
 
     <TextView
         android:id="@+id/tvSelectedDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="날짜가 선택되지 않음"
-        android:layout_marginTop="4dp"/>
-
-    <!-- 저장 버튼 -->
-    <Button
-        android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="저장하기"
-        android:layout_marginTop="16dp"/>
+        android:text="Date Not Selected"
+        android:textSize = "16dp"
+        android:textColor="#808080"
+        android:gravity = "center"
+        android:layout_marginTop="2dp"/>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text= "Save"
+        android:textSize = "17dp"
+        android:textColor= "#B244BE"
+        android:layout_marginStart = "257dp"
+        android:backgroundTint ="#000000"
+        android:layout_marginTop="18dp"/>
 
 </LinearLayout>

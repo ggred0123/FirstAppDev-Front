@@ -11,7 +11,7 @@
         android:layout_margin="16dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="8dp"
-        app:cardBackgroundColor= "#F2F2FC">
+        app:cardBackgroundColor= "#000000">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,6 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Name"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#808080"
         android:layout_marginBottom="8dp"/>
 
     <EditText
@@ -30,6 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#808080"
         android:inputType="textEmailAddress"
         android:layout_marginBottom="8dp"/>
 
@@ -37,14 +41,18 @@
         android:id="@+id/edtBirthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:hint="Birthday (YYYY-MM-DD)"
+        android:textColorHint="#808080"
         android:layout_marginBottom="8dp"/>
 
     <EditText
         android:id="@+id/edtPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:hint="Phone Number"
+        android:textColorHint="#808080"
         android:inputType="phone"
         android:layout_marginBottom="8dp"/>
 
@@ -52,7 +60,9 @@
         android:id="@+id/edtInstagram"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:hint="Instagram ID"
+        android:textColorHint="#808080"
         android:layout_marginBottom="8dp"/>
 
 </LinearLayout>

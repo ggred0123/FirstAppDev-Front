@@ -248,7 +248,7 @@ class ContactFragment : Fragment() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_contact, null)
         val customTitleView = layoutInflater.inflate(R.layout.dialog_title, null)
 
-        AlertDialog.Builder(requireContext())
+        val dialog = AlertDialog.Builder(requireContext(), R.style.DarkDialog)  // 스타일 적용
             .setCustomTitle(customTitleView)
             .setTitle("Add New Contact")
             .setView(dialogView)
@@ -266,7 +266,18 @@ class ContactFragment : Fragment() {
                 }
             }
             .setNegativeButton("Cancel", null)
-            .show()
+            .create()
+        dialog.setOnShowListener {
+            // Add 버튼 색상 설정
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(requireContext().getColor(R.color.purple2))
+
+            // Cancel 버튼 색상 설정
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(requireContext().getColor(R.color.purple2))
+        }
+        // 다이얼로그 창 배경 설정
+        dialog.window?.setBackgroundDrawableResource(android.R.color.black)
+
+        dialog.show()
     }
 
     private fun createUser(userCreate: UserCreate) {

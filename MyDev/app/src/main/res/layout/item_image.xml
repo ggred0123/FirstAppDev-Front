@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
+        android:fontFamily="@font/nunito_semibold"
         android:focusable="true"
         android:clickable="true"/>
 </androidx.cardview.widget.CardView>

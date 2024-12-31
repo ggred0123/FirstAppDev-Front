@@ -24,6 +24,7 @@
                 android:hint="Name"
                 android:textColorHint="#808080"
                 android:textColor="#FFFFFF"
+                android:fontFamily="@font/nunito_semibold"
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -33,6 +34,7 @@
                 android:hint="Email"
                 android:textColorHint="#808080"
                 android:textColor="#FFFFFF"
+                android:fontFamily="@font/nunito_semibold"
                 android:inputType="textEmailAddress"
                 android:layout_marginBottom="8dp"/>
 
@@ -43,6 +45,7 @@
                 android:hint="Birthday (YYYY-MM-DD)"
                 android:textColorHint="#808080"
                 android:textColor="#FFFFFF"
+                android:fontFamily="@font/nunito_semibold"
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -53,6 +56,7 @@
                 android:inputType="phone"
                 android:textColorHint="#808080"
                 android:textColor="#FFFFFF"
+                android:fontFamily="@font/nunito_semibold"
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -62,6 +66,7 @@
                 android:hint="Instagram ID"
                 android:textColorHint="#808080"
                 android:textColor="#FFFFFF"
+                android:fontFamily="@font/nunito_semibold"
                 android:layout_marginBottom="8dp"/>
 
         </LinearLayout>

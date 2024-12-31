@@ -161,10 +161,10 @@ class ContactFragment : Fragment() {
         // 텍스트뷰 설정
         dialogView.findViewById<TextView>(R.id.tvName).text = "Name: ${user.userName}"
         dialogView.findViewById<TextView>(R.id.tvEmail).text = "Email: ${user.email}"
-        dialogView.findViewById<TextView>(R.id.tvBirthday).text = "Birthday: ${user.birthday}"
+        dialogView.findViewById<TextView>(R.id.tvBirthday).text = "Birthday: ${user.birthday.substring(0, 10)}"
         dialogView.findViewById<TextView>(R.id.tvPhone).text = "Phone: ${user.phoneNumber}"
         dialogView.findViewById<TextView>(R.id.tvInstagram).text = "Instagram: ${user.instagramId}"
-        dialogView.findViewById<TextView>(R.id.tvCreated).text = "Created: ${user.createdAt}"
+        dialogView.findViewById<TextView>(R.id.tvCreated).text = "Created: ${user.createdAt.substring(0, 10)}"
 
         val dialog = AlertDialog.Builder(requireContext(), R.style.DarkDialog)
             .setView(dialogView)
@@ -225,7 +225,7 @@ class ContactFragment : Fragment() {
 
         dialogView.findViewById<EditText>(R.id.edtName).setText(user.userName)
         dialogView.findViewById<EditText>(R.id.edtEmail).setText(user.email)
-        dialogView.findViewById<EditText>(R.id.edtBirthday).setText(user.birthday)
+        dialogView.findViewById<EditText>(R.id.edtBirthday).setText(user.birthday.split("T")[0])
         dialogView.findViewById<EditText>(R.id.edtPhone).setText(user.phoneNumber)
         dialogView.findViewById<EditText>(R.id.edtInstagram).setText(user.instagramId)
 

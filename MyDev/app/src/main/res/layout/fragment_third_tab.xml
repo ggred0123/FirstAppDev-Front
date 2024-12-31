@@ -42,6 +42,7 @@
         android:layout_marginTop="70dp"
         android:background="#000000"
         android:clipToPadding="false"
+        android:fontFamily="@font/nunito_semibold"
         android:padding="8dp" />
 
 </FrameLayout>

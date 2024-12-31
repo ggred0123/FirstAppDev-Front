@@ -11,6 +11,7 @@
         android:textSize="20sp"
         android:textColor="#FFFFFF"
         android:gravity="center"
+        android:fontFamily="@font/nunito_semibold"
         android:padding="16dp" />
 
 

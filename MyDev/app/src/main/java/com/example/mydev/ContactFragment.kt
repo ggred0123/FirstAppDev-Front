@@ -207,6 +207,7 @@ class ContactFragment : Fragment() {
 
     private fun showEditDialog(user: User) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_contact, null)
+        val editTitleView = layoutInflater.inflate(R.layout.edit_title, null)
 
         dialogView.findViewById<EditText>(R.id.edtName).setText(user.userName)
         dialogView.findViewById<EditText>(R.id.edtEmail).setText(user.email)
@@ -214,9 +215,10 @@ class ContactFragment : Fragment() {
         dialogView.findViewById<EditText>(R.id.edtPhone).setText(user.phoneNumber)
         dialogView.findViewById<EditText>(R.id.edtInstagram).setText(user.instagramId)
 
-        AlertDialog.Builder(requireContext())
+        val dialog = AlertDialog.Builder(requireContext())
             .setTitle("Edit Contact")
             .setView(dialogView)
+            .setCustomTitle(editTitleView)
             .setPositiveButton("Save") { dialog, _ ->
                 val updatedUser = UserUpdate(
                     userName = dialogView.findViewById<EditText>(R.id.edtName).text.toString(),
@@ -228,7 +230,18 @@ class ContactFragment : Fragment() {
                 updateUser(user.id, updatedUser)
             }
             .setNegativeButton("Cancel", null)
-            .show()
+            .create()
+        dialog.setOnShowListener {
+            // Add 버튼 색상 설정
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(requireContext().getColor(R.color.purple2))
+
+            // Cancel 버튼 색상 설정
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(requireContext().getColor(R.color.purple2))
+        }
+        // 다이얼로그 창 배경 설정
+        dialog.window?.setBackgroundDrawableResource(android.R.color.black)
+
+        dialog.show()
     }
 
     private fun updateUser(userId: Int, userUpdate: UserUpdate) {

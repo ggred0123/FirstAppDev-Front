@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Name"
                 android:textColorHint="#808080"
-                android:textColor="#808080"
+                android:textColor="#FFFFFF"
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Email"
                 android:textColorHint="#808080"
-                android:textColor="#808080"
+                android:textColor="#FFFFFF"
                 android:inputType="textEmailAddress"
                 android:layout_marginBottom="8dp"/>
 
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Birthday (YYYY-MM-DD)"
                 android:textColorHint="#808080"
-                android:textColor="#808080"
+                android:textColor="#FFFFFF"
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -52,7 +52,7 @@
                 android:hint="Phone Number"
                 android:inputType="phone"
                 android:textColorHint="#808080"
-                android:textColor="#808080"
+                android:textColor="#FFFFFF"
                 android:layout_marginBottom="8dp"/>
 
             <EditText
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Instagram ID"
                 android:textColorHint="#808080"
-                android:textColor="#808080"
+                android:textColor="#FFFFFF"
                 android:layout_marginBottom="8dp"/>
 
         </LinearLayout>

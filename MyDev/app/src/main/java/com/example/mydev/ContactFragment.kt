@@ -57,7 +57,6 @@ class ContactFragment : Fragment() {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         spannableString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.purple_200)), // #BB86FC
             ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.purple2)), // #BB86FC
             3,
             fullTitle.length,

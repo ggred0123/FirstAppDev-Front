@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#000000">
 
-    <TextView
-    android:id="@+id/tvUploadedImages"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="0dp"
-    android:background="#4B0082"
-    android:gravity="center"
-    android:padding="15dp"
-    android:text="Memories"
-    android:textColor="#FFFFFF"
-    android:textSize="24sp"
-    android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shared "
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="11dp"
+            android:layout_marginLeft="8dp"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Memories"
+            android:textColor="#B244BE"
+            android:layout_marginTop="11dp"
+            android:textSize="24sp" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewAlbums"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
         android:layout_marginTop="70dp"
+        android:background="#000000"
+        android:clipToPadding="false"
         android:padding="8dp" />
 
 </FrameLayout>

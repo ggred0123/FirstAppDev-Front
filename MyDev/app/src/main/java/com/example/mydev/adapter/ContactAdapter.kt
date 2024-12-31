@@ -57,7 +57,7 @@ class ContactAdapter(
         holder.phoneTextView.text = user.phoneNumber
 
         // Set default profile image
-        holder.profileImageView.setImageResource(R.drawable.ic_add)
+        holder.profileImageView.setImageResource(R.drawable.user_profile_7)
 
 
 

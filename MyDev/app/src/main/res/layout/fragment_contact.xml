@@ -15,19 +15,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="23dp"
             android:layout_marginBottom="16dp" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/search_background"
-            app:queryHint="Search by name or number"
+            android:background="@drawable/rounded_search_view"
+            app:queryHint="Search by name.."
             app:iconifiedByDefault="false"
             app:queryBackground="@null"
             app:searchIcon="@drawable/ic_add"/>
@@ -36,15 +35,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Contacts"
+            android:layout_marginTop="9dp"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:layout_marginBottom="8dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:clipToPadding="false"
             android:paddingHorizontal="16dp" />

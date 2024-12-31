@@ -1,14 +1,19 @@
 package com.example.mydev
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -51,6 +56,13 @@ class ImagesFragment : Fragment() {
         // View 초기화
         fabAddImage = view.findViewById(R.id.fabAddImage)
         recyclerView = view.findViewById(R.id.recyclerViewImages)
+
+        val tvUploadedImages: TextView = view.findViewById(R.id.tvUploadedImages)
+        val fullText = "Uploaded Images"
+        val spannableString = SpannableString(fullText)
+        val purpleColor = ForegroundColorSpan(Color.parseColor("#BE44BE")) // 보라색 컬러코드
+        spannableString.setSpan(purpleColor, 9, fullText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        tvUploadedImages.text = spannableString
 
         // RecyclerView 설정
         setupRecyclerView()

@@ -1,5 +1,6 @@
 package com.example.mydev
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -30,6 +31,8 @@ class MainActivity : AppCompatActivity() {
 
         // Connect adapter to ViewPager2
         binding.viewPager2.adapter = tabAdapter
+        window.statusBarColor = Color.BLACK
+
 
         // Connect TabLayout with ViewPager2 using TabLayoutMediator
         TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->

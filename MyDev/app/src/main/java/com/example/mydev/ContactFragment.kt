@@ -2,7 +2,11 @@ package com.example.mydev
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +48,26 @@ class ContactFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val fullTitle = "My Contacts"
+        val spannableString = SpannableString(fullTitle)
+        spannableString.setSpan(
+            ForegroundColorSpan(Color.WHITE),
+            0,
+            2,  // "My" is 2 characters
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        spannableString.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.purple_200)), // #BB86FC
+            3,
+            fullTitle.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        binding.titleTextView.text = spannableString
+
+
+
+
         fetchUsers()
 
         binding.fabAddContact.setOnClickListener {

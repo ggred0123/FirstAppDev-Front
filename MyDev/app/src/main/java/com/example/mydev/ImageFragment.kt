@@ -7,19 +7,14 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mydev.adapter.ImageAdapter
 import com.example.mydev.adapter.ItemMoveCallback
 import com.example.mydev.api.RetrofitInstance
-import com.example.mydev.viewmodel.ImagesViewModel
 import com.example.mydev.viewmodel.SharedViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
@@ -28,6 +23,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import android.graphics.Rect
 
 class ImagesFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
@@ -47,57 +43,70 @@ class ImagesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_images, container, false)
-
-        // View 초기화
-        fabAddImage = view.findViewById(R.id.fabAddImage)
-        recyclerView = view.findViewById(R.id.recyclerViewImages)
-
-        // RecyclerView 설정
+        initializeViews(view)
         setupRecyclerView()
-
-        // ItemTouchHelper 연결
-        val itemTouchHelper = ItemTouchHelper(ItemMoveCallback(imageAdapter))
-        itemTouchHelper.attachToRecyclerView(recyclerView)
-
-        // 서버에서 이미지 목록 가져오기
         fetchImagesFromServer()
+        return view
+    }
 
-        // FloatingActionButton 클릭 리스너 설정
+    private fun initializeViews(view: View) {
+        recyclerView = view.findViewById(R.id.recyclerViewImages)
+        fabAddImage = view.findViewById(R.id.fabAddImage)
+
         fabAddImage.setOnClickListener {
             openGallery()
         }
+    }
 
-        return view
-    }
-    private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "image/*"
-        startActivityForResult(intent, GALLERY_REQUEST_CODE)
-    }
     private fun setupRecyclerView() {
-        // 이미지 클릭 이벤트 추가
+        // Grid Layout 설정
+        recyclerView.layoutManager = GridLayoutManager(context, 3).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int = 1
+            }
+        }
+
+        // 아이템 간격 설정
+        recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
+            ) {
+                val spacing = resources.getDimensionPixelSize(R.dimen.grid_spacing)
+                outRect.set(spacing, spacing, spacing, spacing)
+            }
+        })
+
+        // 이미지 클릭 이벤트 설정
         imageAdapter.setOnItemClickListener { imageId ->
             val dialog = ImageDetailDialogFragment.newInstance(imageId)
             dialog.show(childFragmentManager, "ImageDetailDialog")
         }
 
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열 그리드
+        // 어댑터 연결
         recyclerView.adapter = imageAdapter
 
+        // 드래그 앤 드롭 설정
+        val itemTouchHelper = ItemTouchHelper(ItemMoveCallback(imageAdapter))
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
 
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GALLERY_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
             selectedImageUri = data?.data
-            if (selectedImageUri != null) {
-                val dialog = ImageUploadDialogFragment.newInstance(selectedImageUri!!)
-                // 업로드 성공 리스너 수정
+            selectedImageUri?.let { uri ->
+                val dialog = ImageUploadDialogFragment.newInstance(uri)
                 dialog.setOnUploadSuccessListener {
-                    // 서버에서 새 데이터를 가져오고
                     fetchImagesFromServer()
-                    // 다른 Fragment들에게 알림
                     lifecycleScope.launch {
                         sharedViewModel.notifyImageUpdated()
                     }

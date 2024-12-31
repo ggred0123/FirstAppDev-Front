@@ -38,6 +38,9 @@ class ImageAdapter(
     // 아이템 레이아웃 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false)
+        // Make the item square
+        val size = parent.measuredWidth / 3 // 3 columns
+        view.layoutParams = ViewGroup.LayoutParams(size, size)
         return ImageViewHolder(view)
     }
 
@@ -46,13 +49,10 @@ class ImageAdapter(
 
         Glide.with(context)
             .load(imageData.url)
+            .centerCrop() // Ensure the image fills the square
             .into(holder.imgItem)
 
-        // 여기에도 클릭 리스너 설정
         holder.itemView.setOnClickListener {
-            onItemClickListener?.invoke(imageData.id)
-        }
-        holder.imgItem.setOnClickListener {
             onItemClickListener?.invoke(imageData.id)
         }
     }

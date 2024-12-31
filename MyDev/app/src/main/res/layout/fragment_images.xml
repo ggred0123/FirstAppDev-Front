@@ -1,49 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="#000000">
 
-    <!-- Uploaded Images 텍스트 추가 -->
-
-    <!-- RecyclerView -->
-
-    <!-- Floating Action Button -->
-    <TextView
-        android:id="@+id/tvUploadedImages"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        android:background="#4B0082"
-        android:gravity="center"
-        android:padding="15dp"
-        android:text="Uploaded Images"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewImages"
-        android:layout_width="match_parent"
-        android:layout_marginTop="70dp"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:padding="4dp"
+        android:orientation="vertical">
 
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="3" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Uploaded Images"
+            android:textSize="24sp"
+            android:textStyle="bold">
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewImages"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:padding="8dp" />
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:scaleType="centerCrop"
         android:layout_gravity="bottom|end"
-        android:src="@drawable/ic_add2"
-        app:maxImageSize="40dp" />
+        android:layout_margin="16dp"
+        android:backgroundTint="#BB86FC"
+        app:tint="#FFFFFF"
+        android:src="@drawable/ic_add2" />
 
 </FrameLayout>
-
-

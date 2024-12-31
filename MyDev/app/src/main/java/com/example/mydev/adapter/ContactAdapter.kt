@@ -55,13 +55,15 @@ class ContactAdapter(
 
         holder.nameTextView.text = user.userName
         holder.phoneTextView.text = user.phoneNumber
-        holder.profileImageView.setImageResource(user.profileImageRes)
+
+        // Set default profile image
+        holder.profileImageView.setImageResource(R.drawable.ic_add)
+
+
 
         holder.itemView.setOnClickListener {
             onItemClick(user)
         }
-
-        Log.d("ContactAdapter", "Setting image resource: ${user.profileImageRes}")
     }
 
     override fun getItemCount() = users.size

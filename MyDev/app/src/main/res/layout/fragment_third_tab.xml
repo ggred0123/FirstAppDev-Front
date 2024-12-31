@@ -18,7 +18,10 @@
             android:textColor="#FFFFFF"
             android:layout_marginTop="11dp"
             android:layout_marginLeft="8dp"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:fontFamily="@font/nunito_semibold"
+
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -26,7 +29,10 @@
             android:text="Memories"
             android:textColor="#B244BE"
             android:layout_marginTop="11dp"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:fontFamily="@font/nunito_semibold"
+
+            />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

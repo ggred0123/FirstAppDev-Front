@@ -22,7 +22,10 @@
         android:padding="15dp"
         android:text="Uploaded Images"
         android:textColor="#FFFFFF"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:fontFamily="@font/nunito_semibold"
+
+        />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddImage"
         android:layout_width="67dp"

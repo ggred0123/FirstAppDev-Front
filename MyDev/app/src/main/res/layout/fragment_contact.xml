@@ -22,7 +22,10 @@
             android:textSize="25sp"
             android:layout_marginStart="21dp"
             android:layout_marginTop="28dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/nunito_semibold"
+
+            />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAddContact"
@@ -52,6 +55,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_search_view"
+            android:fontFamily="@font/nunito_semibold"
             app:queryHint="Search by name.."
             app:iconifiedByDefault="false"
             app:queryBackground="@null"
@@ -64,6 +68,7 @@
             android:layout_marginTop="9dp"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
+            android:fontFamily="@font/nunito_semibold"
             android:layout_marginStart="24dp"
             android:layout_marginBottom="8dp" />
 
@@ -74,6 +79,7 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:clipToPadding="false"
+            android:fontFamily="@font/nunito_semibold"
             android:paddingHorizontal="16dp" />
     </LinearLayout>
 

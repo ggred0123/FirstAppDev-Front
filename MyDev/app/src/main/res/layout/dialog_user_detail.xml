@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="User Detail"
             android:textSize="21sp"
-
+            android:fontFamily="@font/nunito_semibold"
             android:gravity="center"
             android:textColor="#FFFFFF"
             android:layout_marginBottom="16dp" />
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="Name:"
             android:textColor="#808080"
-
+            android:fontFamily="@font/nunito_semibold"
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />
 
@@ -41,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Email:"
+            android:fontFamily="@font/nunito_semibold"
             android:textColor="#808080"
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />
@@ -50,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Birthday:"
+            android:fontFamily="@font/nunito_semibold"
             android:textColor="#808080"
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />
@@ -59,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Phone:"
+            android:fontFamily="@font/nunito_semibold"
             android:textColor="#808080"
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />
@@ -68,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Instagram:"
+            android:fontFamily="@font/nunito_semibold"
             android:textColor="#808080"
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />
@@ -77,6 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Created:"
+            android:fontFamily="@font/nunito_semibold"
             android:textColor="#808080"
             android:textSize="17sp"
             android:layout_marginBottom="8dp" />

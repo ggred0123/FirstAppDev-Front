@@ -64,8 +64,8 @@ class ImageDetailDialogFragment : DialogFragment() {
                                 .load(it.url)
                                 .into(imageView)
 
-                            tvInstagramId.text = "Instagram ID: ${it.instagramIds.joinToString(", ")}"
-                            tvCreatedAt.text = "Created At: ${it.createdAt}"
+                            tvInstagramId.text = "Instagram ID:  ${it.instagramIds.joinToString(", ")}"
+                            tvCreatedAt.text = "Created At:  ${it.createdAt}"
                         }
                     }
                 } else {

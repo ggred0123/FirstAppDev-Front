@@ -23,7 +23,7 @@
             android:text="Album Title"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:fontFamily="@font/ojuju_bold"
+            android:fontFamily="@font/ojuju_regular"
             android:textColor="#FFFFFF"
             android:layout_marginBottom="10dp" />
 

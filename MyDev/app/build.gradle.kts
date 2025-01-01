@@ -82,6 +82,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation ("androidx.fragment:fragment-ktx:1.5.5")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation ("androidx.core:core-splashscreen:1.0.1")
 
 
 

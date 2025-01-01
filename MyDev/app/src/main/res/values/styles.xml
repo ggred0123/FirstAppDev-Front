@@ -30,7 +30,7 @@
         <item name="windowSplashScreenBackground">@color/black</item>
 
         <!-- 스플래시 화면에 표시할 아이콘 -->
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ipad_mini_8_3___1</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
 
 
 
@@ -42,8 +42,7 @@
         <item name="postSplashScreenTheme">@style/Theme.MyDev</item>
 
 
-        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
-        <item name="android:windowSplashScreenBehavior">icon_preferred</item>
+
     </style>
 
 

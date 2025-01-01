@@ -1,0 +1,80 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="@color/white" />
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#FFFFFF"/>
+            <stroke android:width="2dp" android:color="#B244BE"/>
+        </shape>
+    </item>
+    <item
+        android:gravity="center"
+        android:width="60dp"
+        android:height="90dp">
+        <vector
+            android:width="180dp"
+            android:height="180dp"
+            android:viewportWidth="528"
+            android:viewportHeight="629">
+            <!-- 기존 벡터 내용 -->
+            <group>
+                <clip-path
+                    android:pathData="M0,0h528v629h-528z"/>
+                <path
+                    android:pathData="M0,0h528v629h-528z"
+                    android:fillColor="#000000"/>
+                <path
+                    android:pathData="M190.11,589.68L185.97,581.86H239.1V599H172.17V582.55L220.01,532.41L224.03,540.23H172.74V523.1H237.83V539.54L190.11,589.68ZM272.19,523.1V599H248.73V523.1H272.19ZM323.96,523.1C330.47,523.1 335.99,524.14 340.52,526.21C345.12,528.2 348.61,531.15 350.98,535.06C353.44,538.89 354.66,543.61 354.66,549.21C354.66,554.8 353.44,559.55 350.98,563.47C348.61,567.3 345.12,570.25 340.52,572.32C335.99,574.31 330.47,575.31 323.96,575.31H309.7V599H286.24V523.1H323.96ZM320.16,558.29C323.61,558.29 326.3,557.56 328.21,556.1C330.13,554.57 331.09,552.27 331.09,549.21C331.09,546.14 330.13,543.88 328.21,542.42C326.3,540.89 323.61,540.12 320.16,540.12H309.7V558.29H320.16Z"
+                    android:fillColor="#B244BE"/>
+                <path
+                    android:pathData="M202.5,96h61v35h-61z"
+                    android:fillColor="#B244BE"/>
+                <path
+                    android:pathData="M263.5,276h61v35h-61z"
+                    android:fillColor="#B244BE"/>
+                <path
+                    android:pathData="M209.5,306L317.5,306A7,7 0,0 1,324.5 313L324.5,449A7,7 0,0 1,317.5 456L209.5,456A7,7 0,0 1,202.5 449L202.5,313A7,7 0,0 1,209.5 306z"
+                    android:fillColor="#B244BE"/>
+                <path
+                    android:pathData="M228.5,385L298.5,385A7,7 0,0 1,305.5 392L305.5,429A7,7 0,0 1,298.5 436L228.5,436A7,7 0,0 1,221.5 429L221.5,392A7,7 0,0 1,228.5 385z"
+                    android:fillColor="#000000"/>
+                <path
+                    android:pathData="M263.5,131h61v35h-61z"
+                    android:fillColor="#B244BE"/>
+                <path
+                    android:pathData="M202.5,166h61v35h-61z"
+                    android:fillColor="#B244BE"/>
+                <path
+                    android:pathData="M263.5,201h61v35h-61z"
+                    android:fillColor="#B244BE"/>
+                <path
+                    android:pathData="M202.5,241h61v35h-61z"
+                    android:fillColor="#B244BE"/>
+                <path
+                    android:pathData="M263.5,56h61v35h-61z"
+                    android:fillColor="#B244BE"/>
+                <path
+                    android:strokeWidth="1"
+                    android:pathData="M0,497H527"
+                    android:fillColor="#00000000"
+                    android:strokeColor="#000000"/>
+                <path
+                    android:pathData="M1.5,493H525.5"
+                    android:strokeWidth="6"
+                    android:fillColor="#00000000"
+                    android:strokeColor="#393939"/>
+                <path
+                    android:pathData="M397.5,133V2L527.5,133H397.5Z"
+                    android:strokeWidth="4"
+                    android:fillColor="#393939"
+                    android:strokeColor="#393939"/>
+                <path
+                    android:pathData="M527.5,0L527.87,131L397.5,0.37L527.5,0Z"
+                    android:strokeWidth="4"
+                    android:fillColor="#ffffff"
+                    android:strokeColor="#ffffff"/>
+            </group>
+        </vector>
+    </item>
+</layer-list>

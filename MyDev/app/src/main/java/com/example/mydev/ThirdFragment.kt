@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -20,28 +23,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import androidx.fragment.app.activityViewModels
-
 
 class ThirdTabFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // 이미지 업데이트 이벤트 구독
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                sharedViewModel.imageUpdateTrigger.collect {
-                    // 이미지가 업데이트되면 새로운 데이터를 가져옴
-                    fetchAlbumsFromServer()
-                }
-            }
-        }
-    }
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var albumAdapter: AlbumAdapter
+    private lateinit var searchEditText: EditText
+    private var allAlbums: List<Album> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,43 +38,75 @@ class ThirdTabFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_third_tab, container, false)
 
         recyclerView = view.findViewById(R.id.recyclerViewAlbums)
-        setupRecyclerView()
+        searchEditText = view.findViewById(R.id.searchEditText)
 
-        // 서버에서 앨범 리스트 가져오기
+        setupRecyclerView()
+        setupSearchView()
         fetchAlbumsFromServer()
 
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sharedViewModel.imageUpdateTrigger.collect {
+                    fetchAlbumsFromServer()
+                }
+            }
+        }
+    }
+
+    private fun setupSearchView() {
+        searchEditText.addTextChangedListener { text ->
+            filterAlbums(text?.toString() ?: "")
+        }
+    }
+
+    private fun filterAlbums(query: String) {
+        if (query.isEmpty()) {
+            albumAdapter.updateAlbums(allAlbums)
+            return
+        }
+
+        val filteredAlbums = allAlbums.filter { album ->
+            album.instagramId.contains(query, ignoreCase = true)
+        }
+        albumAdapter.updateAlbums(filteredAlbums)
+    }
+
     private fun setupRecyclerView() {
-        // AlbumAdapter 초기화
         albumAdapter = AlbumAdapter(
             context = requireContext(),
-            albums = listOf(), // 초기 리스트는 비워둠
+            albums = listOf(),
             onAlbumClick = { album ->
-                // 다이얼로그 띄우기
                 val dialog = ImageSliderDialogFragment.newInstance(album.images)
                 dialog.show(childFragmentManager, "ImageSliderDialog")
             }
         )
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext()) // 세로 레이아웃
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = albumAdapter
     }
-
 
     private fun fetchAlbumsFromServer() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response = RetrofitInstance.imageApi.getImages() // 서버에서 이미지 리스트 가져오기
+                val response = RetrofitInstance.imageApi.getImages()
                 if (response.isSuccessful) {
                     val images = response.body()?.images ?: mutableListOf()
-
-                    // 그룹화된 앨범 리스트 생성
-                    val albums = groupImagesByInstagramId(images)
+                    allAlbums = groupImagesByInstagramId(images)
 
                     withContext(Dispatchers.Main) {
-                        albumAdapter.updateAlbums(albums) // 데이터를 어댑터에 업데이트
+                        // 현재 검색어를 기준으로 필터링
+                        val currentQuery = searchEditText.text?.toString() ?: ""
+                        if (currentQuery.isEmpty()) {
+                            albumAdapter.updateAlbums(allAlbums)
+                        } else {
+                            filterAlbums(currentQuery)
+                        }
                     }
                 } else {
                     withContext(Dispatchers.Main) {
@@ -112,5 +132,4 @@ class ThirdTabFragment : Fragment() {
                 )
             }
     }
-
 }

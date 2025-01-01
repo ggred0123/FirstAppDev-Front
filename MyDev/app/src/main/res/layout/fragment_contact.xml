@@ -15,51 +15,51 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/nunito_semibold"
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/nunito_semibold" />
 
-            />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAddContact"
-            android:layout_width="67dp"
-            android:layout_height="67dp"
-            android:layout_marginStart="170dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_gravity="bottom|end"
-            app:srcCompat="@drawable/user_plus"
-            app:fabCustomSize="70dp"
-            app:maxImageSize="35dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:scaleType="center"
-            android:backgroundTint="#000000"
-            app:tint="#FFFFFF"
-            android:contentDescription="Add contact"
-            android:background="@drawable/outline"
-            />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabAddContact"
+                android:layout_width="67dp"
+                android:layout_height="67dp"
+                android:layout_marginStart="170dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="bottom|end"
+                app:srcCompat="@drawable/user_plus"
+                app:fabCustomSize="70dp"
+                app:maxImageSize="35dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:scaleType="center"
+                android:backgroundTint="#000000"
+                app:tint="#FFFFFF"
+                android:contentDescription="Add contact"
+                android:background="@drawable/outline" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
+        <EditText
+            android:id="@+id/searchEditText"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_search_view"
-            android:fontFamily="@font/nunito_semibold"
-            app:queryHint="Search by name.."
-            app:iconifiedByDefault="false"
-            app:queryBackground="@null"
-            app:searchIcon="@drawable/icon_search"/>
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="23dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/search_background"
+            android:hint="Search by name.."
+            android:textColorHint="#80FFFFFF"
+            android:textColor="#FFFFFF"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:fontFamily="@font/nunito_regular"
+            android:textSize="14sp"
+            android:singleLine="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,7 +82,5 @@
             android:fontFamily="@font/nunito_semibold"
             android:paddingHorizontal="16dp" />
     </LinearLayout>
-
-
 
 </FrameLayout>

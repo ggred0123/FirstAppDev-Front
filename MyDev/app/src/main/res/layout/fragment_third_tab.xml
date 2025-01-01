@@ -25,7 +25,7 @@
                 android:layout_marginTop="11dp"
                 android:layout_marginLeft="8dp"
                 android:textSize="24sp"
-                android:fontFamily="@font/nunito_semibold" />
+                android:fontFamily="@font/nunito_regular" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
                 android:textColor="#B244BE"
                 android:layout_marginTop="11dp"
                 android:textSize="24sp"
-                android:fontFamily="@font/nunito_semibold" />
+                android:fontFamily="@font/nunito_regular" />
         </LinearLayout>
 
         <EditText
@@ -44,12 +44,12 @@
             android:layout_marginHorizontal="23dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/search_background"
-            android:hint="Instagram ID로 검색"
+            android:hint="Search by Instagram Id"
             android:textColorHint="#80FFFFFF"
             android:textColor="#FFFFFF"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            android:fontFamily="@font/nunito_semibold"
+            android:fontFamily="@font/nunito_regular"
             android:textSize="14sp"
             android:singleLine="true"/>
     </LinearLayout>
@@ -61,7 +61,7 @@
         android:layout_marginTop="120dp"
         android:background="#000000"
         android:clipToPadding="false"
-        android:fontFamily="@font/nunito_semibold"
+        android:fontFamily="@font/nunito_regular"
         android:padding="8dp" />
 
 </FrameLayout>

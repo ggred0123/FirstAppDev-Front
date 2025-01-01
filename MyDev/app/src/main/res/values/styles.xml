@@ -36,7 +36,7 @@
 
 
         <!-- 스플래시 화면이 표시되는 시간 -->
-        <item name="windowSplashScreenAnimationDuration">200</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
 
         <!-- 스플래시 화면 이후 전환될 테마 -->
         <item name="postSplashScreenTheme">@style/Theme.MyDev</item>

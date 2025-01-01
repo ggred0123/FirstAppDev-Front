@@ -32,7 +32,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 
 class ImagesFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
@@ -80,6 +82,19 @@ class ImagesFragment : Fragment() {
         }
 
         return view
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // SharedViewModel의 이미지 업데이트 이벤트 구독
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sharedViewModel.imageUpdateTrigger.collect {
+                    // 이미지가 업데이트되면 새로운 데이터를 가져옴
+                    fetchImagesFromServer()
+                }
+            }
+        }
     }
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

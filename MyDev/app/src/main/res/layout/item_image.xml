@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="129dp"
-    android:layout_height="129dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="4dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="3dp">
@@ -11,9 +11,10 @@
     <ImageView
         android:id="@+id/imgItem"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="120dp"
         android:scaleType="centerCrop"
         android:fontFamily="@font/nunito_semibold"
         android:focusable="true"
         android:clickable="true"/>
+
 </androidx.cardview.widget.CardView>

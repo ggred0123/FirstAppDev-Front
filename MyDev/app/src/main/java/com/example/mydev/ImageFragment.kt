@@ -2,6 +2,7 @@ package com.example.mydev
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -102,16 +103,23 @@ class ImagesFragment : Fragment() {
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
     private fun setupRecyclerView() {
-        // 이미지 클릭 이벤트 추가
         imageAdapter.setOnItemClickListener { imageId ->
             val dialog = ImageDetailDialogFragment.newInstance(imageId)
             dialog.show(childFragmentManager, "ImageDetailDialog")
         }
 
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3열 그리드
-        recyclerView.adapter = imageAdapter
+        recyclerView.apply {
+            layoutManager = GridLayoutManager(requireContext(), 3)
+            adapter = imageAdapter
 
+            // 가로, 세로 간격 각각 설정
+            val horizontalSpacing = resources.getDimensionPixelSize(R.dimen.grid_horizontal_spacing) // 예: 8dp
+            val verticalSpacing = resources.getDimensionPixelSize(R.dimen.grid_vertical_spacing)     // 예: 16dp
 
+            if (itemDecorationCount == 0) {
+                addItemDecoration(GridSpacingItemDecoration(3, horizontalSpacing, verticalSpacing))
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -146,6 +154,37 @@ class ImagesFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
+            }
+        }
+    }
+
+    private class GridSpacingItemDecoration(
+        private val spanCount: Int,
+        private val horizontalSpacing: Int,  // 가로 간격
+        private val verticalSpacing: Int,    // 세로 간격
+        private val includeEdge: Boolean = true
+    ) : RecyclerView.ItemDecoration() {
+
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            val position = parent.getChildAdapterPosition(view)
+            val column = position % spanCount
+
+            if (includeEdge) {
+                outRect.left = horizontalSpacing - column * horizontalSpacing / spanCount
+                outRect.right = (column + 1) * horizontalSpacing / spanCount
+                outRect.top = verticalSpacing
+                outRect.bottom = verticalSpacing
+            } else {
+                outRect.left = column * horizontalSpacing / spanCount
+                outRect.right = horizontalSpacing - (column + 1) * horizontalSpacing / spanCount
+                if (position >= spanCount) {
+                    outRect.top = verticalSpacing
+                }
             }
         }
     }

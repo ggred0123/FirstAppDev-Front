@@ -19,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.mydev.adapter.ContactAdapter
 import com.example.mydev.api.RetrofitInstance
@@ -30,11 +31,14 @@ import kotlinx.coroutines.launch
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mydev.viewmodel.SharedViewModel
 
 class ContactFragment : Fragment() {
     private lateinit var binding: FragmentContactBinding
     private lateinit var adapter: ContactAdapter
     private var allUsers: List<User> = listOf()
+    private val sharedViewModel: SharedViewModel by activityViewModels()  // SharedViewModel 추가
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -202,6 +206,8 @@ class ContactFragment : Fragment() {
                 if (response.isSuccessful) {
                     Toast.makeText(context, "Contact deleted successfully", Toast.LENGTH_SHORT).show()
                     fetchUsers()
+                    // 다른 Fragment들에게 변경사항 알림
+                    sharedViewModel.notifyImageUpdated()
                 } else {
                     Toast.makeText(context, "Failed to delete contact", Toast.LENGTH_SHORT).show()
                 }

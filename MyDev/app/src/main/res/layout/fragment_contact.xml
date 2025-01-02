@@ -29,7 +29,7 @@
                 android:id="@+id/fabAddContact"
                 android:layout_width="67dp"
                 android:layout_height="67dp"
-                android:layout_marginStart="170dp"
+                android:layout_marginStart="150dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_gravity="bottom|end"

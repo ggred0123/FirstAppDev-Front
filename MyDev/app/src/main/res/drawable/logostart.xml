@@ -11,8 +11,8 @@
     </item>
     <item
         android:gravity="center"
-        android:width="64dp"
-        android:height="80dp">
+        android:width="72dp"
+        android:height="90dp">
         <vector
             android:width="744dp"
             android:height="934dp"
